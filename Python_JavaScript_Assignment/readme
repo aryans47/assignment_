@@ -1,0 +1,20 @@
+Python: JavaScript Assignment
+
+1.Implement a function to check if a given string is a palindrome.
+file name : palindrome.py
+
+2.Create a simple to-do list application using HTML, CSS, and JavaScript. Users should be able to add tasks, mark them as complete, and delete them.
+file name : to-do list
+
+3.Write a function that takes an array of integers and returns a new array with only the unique values.
+file name : unique_values.py
+
+4.Implement a recursive function to calculate the factorial of a number.
+file name : factorial_using_recursive.py
+
+5.Create a dynamic form validation library in JavaScript that can handle various types of inputs (text, email, password, etc.) and validation rules.
+file name : form.html
+
+6.Build a small React or Vue application that fetches data from an API and displays it in a user-friendly way.
+file name : react_search_bar_api_call
+

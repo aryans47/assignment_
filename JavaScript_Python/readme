@@ -1,0 +1,10 @@
+JavaScript: Python/NodeJS
+
+Implement a recursive function to calculate the factorial of a number.
+fiename : factorial.js
+
+Build a RESTful API using NodeJS or Flask or Django that allows users to perform CRUD operations on a resource (e.g., a list of books, todos, etc.).
+filename : note-app-main
+
+Create a web scraping tool using BeautifulSoup or Scrapy to extract data from a website and store it in a structured format (e.g., CSV, JSON, database).
+filename : main.py

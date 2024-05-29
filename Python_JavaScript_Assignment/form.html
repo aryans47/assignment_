@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation Library</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container div {
+            margin-bottom: 15px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-container input.input-error {
+            border-color: red;
+        }
+        .form-container .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register</h2>
+        <form id="myForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <span class="error" id="usernameError"></span>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error" id="emailError"></span>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error" id="passwordError"></span>
+            </div>
+            <div>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="error" id="confirmPasswordError"></span>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        class Validator {
+            constructor() {
+                this.rules = {};
+            }
+
+            addRule(field, rule, errorMessage) {
+                if (!this.rules[field]) {
+                    this.rules[field] = [];
+                }
+                this.rules[field].push({ rule, errorMessage });
+            }
+
+            validate(form) {
+                let isValid = true;
+                for (const field in this.rules) {
+                    const input = form.querySelector(`[name=${field}]`);
+                    const errorContainer = document.getElementById(`${field}Error`);
+                    input.classList.remove('input-error');
+                    errorContainer.textContent = '';
+
+                    for (const { rule, errorMessage } of this.rules[field]) {
+                        if (!rule(input.value, form)) {
+                            input.classList.add('input-error');
+                            errorContainer.textContent = errorMessage;
+                            isValid = false;
+                            break;
+                        }
+                    }
+                }
+                return isValid;
+            }
+        }
+
+        // Instantiate the validator
+        const validator = new Validator();
+
+        // Add validation rules
+        validator.addRule('username', value => value.length >= 3, 'Username must be at least 3 characters long.');
+        validator.addRule('email', value => /^\S+@\S+\.\S+$/.test(value), 'Invalid email address.');
+        validator.addRule('password', value => value.length >= 6, 'Password must be at least 6 characters long.');
+        validator.addRule('confirmPassword', (value, form) => value === form.querySelector('[name=password]').value, 'Passwords do not match.');
+
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (validator.validate(this)) {
+                alert('Form submitted successfully!');
+                // Add your form submission logic here
+            }
+        });
+    </script>
+</body>
+</html>
